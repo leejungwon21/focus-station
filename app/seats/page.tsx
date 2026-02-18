@@ -22,8 +22,11 @@ export default function SeatsPage() {
   const [showModal, setShowModal] = useState(false);
   const [timeIdx, setTimeIdx] = useState<number | null>(null);
   const [toast, setToast] = useState<string | null>(null);
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => setUser(data.user));
+
     async function fetchData() {
       const [zonesRes, seatsRes] = await Promise.all([
         supabase.from("zones").select("*").order("sort_order"),
@@ -50,15 +53,48 @@ export default function SeatsPage() {
     setSelected(selected?.id === seat.id ? null : seat);
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     if (timeIdx === null || !selected) return;
+
+    if (!user) {
+      setToast("로그인이 필요합니다.");
+      setShowModal(false);
+      setTimeout(() => setToast(null), 3000);
+      return;
+    }
+
     const zone = zones.find((z) => z.id === selected.zone_id);
     const time = TIME_OPTIONS[timeIdx];
     const price = (zone?.price_per_hour || 0) * time.hours;
+    const now = new Date();
+    const endTime = new Date(now.getTime() + time.hours * 60 * 60 * 1000);
+
+    // 1. 예약 데이터 DB에 저장
+    const { error: resError } = await supabase.from("reservations").insert({
+      user_id: user.id,
+      seat_id: selected.id,
+      zone_id: selected.zone_id,
+      start_time: now.toISOString(),
+      end_time: endTime.toISOString(),
+      duration_hours: time.hours,
+      amount: price,
+      status: "confirmed",
+    });
+
+    if (resError) {
+      setToast("예약 실패: " + resError.message);
+      setTimeout(() => setToast(null), 3000);
+      return;
+    }
+
+    // 2. 좌석 상태 변경
+    await supabase.from("seats").update({ status: "reserved" }).eq("id", selected.id);
+
     setSeats((prev) => prev.map((s) => (s.id === selected.id ? { ...s, status: "reserved" } : s)));
     setToast(`${selected.id} · ${time.label} · ₩${price.toLocaleString()} 예약 완료!`);
     setShowModal(false);
     setSelected(null);
+    setTimeIdx(null);
     setTimeout(() => setToast(null), 3000);
   };
 
@@ -195,3 +231,4 @@ export default function SeatsPage() {
     </div>
   );
 }
+
