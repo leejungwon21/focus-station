@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+
+:root {
+  --bg: #FAFAF9;
+  --card: #FFFFFF;
+  --border: #E5E3E0;
+  --border-light: #EFEDEA;
+  --text: #1A1A1A;
+  --text-secondary: #888888;
+  --text-tertiary: #BBBBBB;
+  --green: #2D9F6F;
+  --green-bg: #EDFAF3;
+  --red: #D9534F;
+  --red-bg: #FDF0EF;
+  --amber: #D4930D;
+  --amber-bg: #FFF8EB;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+::placeholder { color: var(--text-tertiary); }
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(16px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes timerPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
