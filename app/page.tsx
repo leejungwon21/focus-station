@@ -71,7 +71,7 @@ export default function HomePage() {
           ))}
         </div>
 
-        <div className="grid grid-cols-4 gap-px mt-16 bg-[var(--border)] border border-[var(--border)]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-px mt-16 bg-[var(--border)] border border-[var(--border)]">
           {[
             { num: "01", title: "자연광 설계", desc: "넓은 통유리창으로 자연광이 가득한 쾌적한 환경" },
             { num: "02", title: "프리미엄 가구", desc: "인체공학적 의자와 높낮이 조절 가능한 전동 데스크" },
@@ -92,7 +92,7 @@ export default function HomePage() {
           <div className="text-[11px] font-medium text-[var(--text-tertiary)] tracking-[0.2em] mb-4">PRICING</div>
           <h2 className="text-[26px] font-light text-[var(--text)]">이용 요금</h2>
         </div>
-        <div className="grid grid-cols-4 gap-px bg-[var(--border)] border border-[var(--border)]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-px bg-[var(--border)] border border-[var(--border)]">
           {ZONES.map((z) => (
             <div key={z.id} className="bg-white p-9 flex flex-col">
               <div className="font-mono text-base text-[var(--text-tertiary)] mb-5">{z.icon}</div>
@@ -109,3 +109,4 @@ export default function HomePage() {
     </div>
   );
 }
+
