@@ -74,11 +74,11 @@ export default function SeatsPage() {
       user_id: user.id,
       seat_id: selected.id,
       zone_id: selected.zone_id,
-      start_time: now.toISOString(),
-      end_time: endTime.toISOString(),
+      started_at: now.toISOString(),
+      ended_at: endTime.toISOString(),
       duration_hours: time.hours,
       amount: price,
-      status: "confirmed",
+      status: "active",
     });
 
     if (resError) {
