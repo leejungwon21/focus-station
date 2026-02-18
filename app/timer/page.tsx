@@ -63,7 +63,7 @@ export default function TimerPage() {
   const strokeDashoffset = circumference * (1 - progress);
 
   return (
-    <div className="max-w-[960px] mx-auto px-8">
+    <div className="max-w-[960px] mx-auto px-4 md:px-8">
       <div className="text-center pt-10 mb-9">
         <div className="text-[11px] font-medium text-[var(--text-tertiary)] tracking-[0.2em] mb-3">STUDY TIMER</div>
         <h2 className="text-2xl font-light text-[var(--text)]">공부 타이머</h2>
@@ -71,7 +71,7 @@ export default function TimerPage() {
 
       <div className="flex justify-center border-b border-[var(--border)] mb-10">
         {[["timer", "타이머"], ["ranking", "오늘의 랭킹"], ["weekly", "주간 랭킹"]].map(([id, label]) => (
-          <button key={id} onClick={() => setTab(id)} className="text-[13px] px-7 py-3 bg-transparent border-none cursor-pointer"
+          <button key={id} onClick={() => setTab(id)} className="text-[13px] px-5 md:px-7 py-3 bg-transparent border-none cursor-pointer"
             style={{ fontWeight: tab === id ? 600 : 400, color: tab === id ? "var(--text)" : "var(--text-secondary)", borderBottom: tab === id ? "2px solid var(--text)" : "2px solid transparent" }}>
             {label}
           </button>
@@ -79,18 +79,18 @@ export default function TimerPage() {
       </div>
 
       {tab === "timer" && (
-        <div className="grid grid-cols-2 gap-10">
+        <div className="flex flex-col md:grid md:grid-cols-2 gap-10">
           <div className="flex flex-col items-center">
             <input placeholder="공부 과목을 입력하세요" value={subject} onChange={(e) => setSubject(e.target.value)} disabled={isRunning}
               className="w-full max-w-[280px] px-4 py-3 border border-[var(--border)] bg-[var(--bg)] text-[13px] text-center outline-none mb-8" />
-            <div className="relative w-[290px] h-[290px] mb-8">
-              <svg width="290" height="290" style={{ transform: "rotate(-90deg)" }}>
+            <div className="relative w-[260px] h-[260px] md:w-[290px] md:h-[290px] mb-8">
+              <svg width="100%" height="100%" viewBox="0 0 290 290" style={{ transform: "rotate(-90deg)" }}>
                 <circle cx="145" cy="145" r={radius} fill="none" stroke="var(--border-light)" strokeWidth="3" />
                 <circle cx="145" cy="145" r={radius} fill="none" stroke={isRunning ? "var(--green)" : "var(--text)"} strokeWidth="3"
                   strokeDasharray={circumference} strokeDashoffset={strokeDashoffset} strokeLinecap="round" style={{ transition: "stroke-dashoffset 1s linear" }} />
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <div className="font-mono text-[42px] font-light text-[var(--text)] tracking-wide">{fmt(seconds)}</div>
+                <div className="font-mono text-[36px] md:text-[42px] font-light text-[var(--text)] tracking-wide">{fmt(seconds)}</div>
                 {isRunning && (
                   <div className="text-xs text-[var(--green)] mt-2 font-medium flex items-center gap-1.5">
                     <div className="w-1.5 h-1.5 rounded-full bg-[var(--green)]" style={{ animation: "timerPulse 1.5s ease-in-out infinite" }} />집중 중
@@ -116,7 +116,7 @@ export default function TimerPage() {
           <div>
             <div className="bg-white border border-[var(--border)] p-7 mb-4">
               <div className="text-xs text-[var(--text-tertiary)] mb-2">오늘 총 공부시간</div>
-              <div className="font-mono text-[32px] font-bold text-[var(--text)]">{fmt(totalToday + (isRunning ? seconds : 0))}</div>
+              <div className="font-mono text-[28px] md:text-[32px] font-bold text-[var(--text)]">{fmt(totalToday + (isRunning ? seconds : 0))}</div>
               <div className="mt-4 h-1 bg-[var(--border-light)]">
                 <div className="h-full bg-[var(--green)] transition-all duration-1000" style={{ width: `${Math.min(((totalToday + seconds) / maxSeconds) * 100, 100)}%` }} />
               </div>
@@ -154,7 +154,7 @@ export default function TimerPage() {
                   <div key={idx} className="flex flex-col items-center gap-2">
                     <div className="text-[13px] font-semibold text-[var(--text)]">{r.name}</div>
                     <div className="font-mono text-xs text-[var(--green)] font-semibold">{fmtHours(r.hours)}</div>
-                    <div className="w-20 flex items-start justify-center pt-3" style={{ height: heights[idx], background: idx === 0 ? "var(--text)" : "var(--border-light)" }}>
+                    <div className="w-16 md:w-20 flex items-start justify-center pt-3" style={{ height: heights[idx], background: idx === 0 ? "var(--text)" : "var(--border-light)" }}>
                       <span className="text-xl">{medals[idx]}</span>
                     </div>
                   </div>
@@ -162,7 +162,7 @@ export default function TimerPage() {
               })}
             </div>
             {FAKE_RANKINGS.slice(3).map((r, i) => (
-              <div key={i} className="px-6 py-3.5 flex items-center gap-4" style={{ borderBottom: i < FAKE_RANKINGS.length - 4 ? "1px solid var(--border-light)" : "none" }}>
+              <div key={i} className="px-4 md:px-6 py-3.5 flex items-center gap-4" style={{ borderBottom: i < FAKE_RANKINGS.length - 4 ? "1px solid var(--border-light)" : "none" }}>
                 <div className="font-mono text-xs text-[var(--text-tertiary)] w-7 text-center font-semibold">{i + 4}</div>
                 <div className="flex-1">
                   <div className="text-[13px] font-medium text-[var(--text)]">{r.name}</div>
@@ -180,3 +180,4 @@ export default function TimerPage() {
     </div>
   );
 }
+

@@ -71,8 +71,8 @@ export default function SeatsPage() {
   }
 
   return (
-    <div className="max-w-[960px] mx-auto px-8">
-      <div className="flex justify-between items-end pt-7 mb-6">
+    <div className="max-w-[960px] mx-auto px-4 md:px-8">
+      <div className="flex flex-col md:flex-row justify-between md:items-end pt-7 mb-6 gap-3">
         <div>
           <div className="text-[11px] font-medium text-[var(--text-tertiary)] tracking-[0.2em] mb-2.5">RESERVATION</div>
           <h2 className="text-2xl font-light text-[var(--text)]">좌석 예약</h2>
@@ -92,7 +92,7 @@ export default function SeatsPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-px bg-[var(--border)] border border-[var(--border)] mb-32">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[var(--border)] border border-[var(--border)] mb-32">
         {zones.map((zone) => {
           const zoneSeats = seats.filter((s) => s.zone_id === zone.id);
           const zoneAvail = zoneSeats.filter((s) => s.status === "available").length;
@@ -112,7 +112,7 @@ export default function SeatsPage() {
                   <div className="text-[11px] font-medium mt-0.5" style={{ color: zoneAvail > 0 ? "var(--green)" : "var(--red)" }}>{zoneAvail}석 가능</div>
                 </div>
               </div>
-              <div className="p-5 grid gap-2" style={{ gridTemplateColumns: `repeat(${cols}, 1fr)`, maxWidth: cols * 56 }}>
+              <div className="p-5 grid gap-2" style={{ gridTemplateColumns: `repeat(${cols}, 1fr)` }}>
                 {zoneSeats.map((seat) => {
                   const isSel = selected?.id === seat.id;
                   const isAvail = seat.status === "available";
@@ -139,23 +139,23 @@ export default function SeatsPage() {
       </div>
 
       {selected && (
-        <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-xl border-t border-[var(--border)] px-8 py-3 z-50">
+        <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-xl border-t border-[var(--border)] px-4 md:px-8 py-3 z-50">
           <div className="max-w-[960px] mx-auto flex justify-between items-center">
             <div>
               <span className="text-[13px] font-semibold text-[var(--text)]">{selected.id}</span>
-              <span className="text-xs text-[var(--text-secondary)] ml-2.5">{zones.find((z) => z.id === selected.zone_id)?.name} · ₩{zones.find((z) => z.id === selected.zone_id)?.price_per_hour.toLocaleString()}/h</span>
+              <span className="text-xs text-[var(--text-secondary)] ml-2.5">{zones.find((z) => z.id === selected.zone_id)?.name}</span>
             </div>
             <div className="flex gap-2">
-              <button onClick={() => setSelected(null)} className="px-5 py-2.5 border border-[var(--border)] bg-transparent text-xs text-[var(--text-secondary)] cursor-pointer">취소</button>
-              <button onClick={() => setShowModal(true)} className="px-7 py-2.5 border-none bg-[var(--text)] text-white text-[13px] font-semibold cursor-pointer">예약하기</button>
+              <button onClick={() => setSelected(null)} className="px-4 md:px-5 py-2.5 border border-[var(--border)] bg-transparent text-xs text-[var(--text-secondary)] cursor-pointer">취소</button>
+              <button onClick={() => setShowModal(true)} className="px-5 md:px-7 py-2.5 border-none bg-[var(--text)] text-white text-[13px] font-semibold cursor-pointer">예약하기</button>
             </div>
           </div>
         </div>
       )}
 
       {showModal && selected && (
-        <div className="fixed inset-0 z-[200] bg-black/25 backdrop-blur-sm flex items-center justify-center" onClick={() => setShowModal(false)}>
-          <div onClick={(e) => e.stopPropagation()} className="bg-white w-[400px] max-h-[85vh] overflow-auto shadow-2xl border border-[var(--border)]">
+        <div className="fixed inset-0 z-[200] bg-black/25 backdrop-blur-sm flex items-center justify-center px-4" onClick={() => setShowModal(false)}>
+          <div onClick={(e) => e.stopPropagation()} className="bg-white w-full max-w-[400px] max-h-[85vh] overflow-auto shadow-2xl border border-[var(--border)]">
             <div className="px-6 py-5 border-b border-[var(--border-light)] flex justify-between">
               <div>
                 <div className="text-[10px] font-medium text-[var(--text-tertiary)] tracking-[0.08em]">RESERVATION</div>
